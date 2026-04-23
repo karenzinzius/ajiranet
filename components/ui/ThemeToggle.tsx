@@ -1,59 +1,59 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 
-export function ThemeToggle() {
+export function ThemeToggle({ compact = false }: { compact?: boolean }) {
   const [theme, setTheme] = useState<"light" | "dark">("dark");
 
   useEffect(() => {
-    const stored = window.localStorage.getItem("theme") as
-      | "light"
-      | "dark"
-      | null;
-    const initial =
-      stored ??
-      (window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light");
+    const stored = window.localStorage.getItem("theme") as "light" | "dark" | null;
+    const initial = stored ?? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
     setTheme(initial);
     document.documentElement.dataset.theme = initial;
   }, []);
 
-  useEffect(() => {
-    document.documentElement.dataset.theme = theme;
-    window.localStorage.setItem("theme", theme);
-  }, [theme]);
+  const toggleTheme = (newTheme: "light" | "dark") => {
+    setTheme(newTheme);
+    document.documentElement.dataset.theme = newTheme;
+    window.localStorage.setItem("theme", newTheme);
+  };
 
   return (
-<button
-  type="button"
-  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-  aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
-  title={`Theme: ${theme === "dark" ? "Dark" : "Light"}`}
-  className="group flex h-11 items-center gap-2 rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface)] px-3 text-[color:var(--text)] transition hover:border-[color:var(--accent)] hover:text-[color:var(--accent)]"
->
-  <span className={`transition-all duration-300 ${
-    theme === "light"
-      ? "text-[color:var(--accent)] scale-125"
-      : "opacity-40 group-hover:opacity-70"
-  }`}>
-    ☀︎
-  </span>
+    <div 
+      className={`relative flex items-center rounded-2xl border border-[color:var(--border)] bg-[color:var(--bg)] p-1 transition-all ${
+        compact ? "w-[100px]" : "w-full"
+      }`}
+    >
+      {/* Sliding Background */}
+      <div
+        className={`absolute h-[calc(100%-8px)] w-[calc(50%-4px)] rounded-xl bg-[color:var(--accent)] transition-all duration-300 ease-in-out ${
+          theme === "dark" ? "translate-x-full" : "translate-x-0"
+        }`}
+      />
 
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 24 24"
-    fill="currentColor"
-    className={`transition-all duration-300 ${
-      theme === "dark"
-        ? "text-[color:var(--accent)] scale-125"
-        : "opacity-40 group-hover:opacity-70"
-    }`}
-  >
-    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-  </svg>
-</button>
+      {/* Light Button */}
+      <button
+        type="button"
+        onClick={() => toggleTheme("light")}
+        className={`relative z-10 flex flex-1 items-center justify-center py-2 transition-colors duration-300 ${
+          theme === "light" ? "text-slate-950" : "text-[color:var(--muted)]"
+        }`}
+      >
+        <span className="text-sm">☀︎</span>
+      </button>
+
+      {/* Dark Button */}
+      <button
+        type="button"
+        onClick={() => toggleTheme("dark")}
+        className={`relative z-10 flex flex-1 items-center justify-center py-2 transition-colors duration-300 ${
+          theme === "dark" ? "text-slate-950" : "text-[color:var(--muted)]"
+        }`}
+      >
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+      </button>
+    </div>
   );
 }
