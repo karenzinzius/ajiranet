@@ -1,9 +1,9 @@
 export const en = {
   home: {
     tagline: "Trusted matches with profiles, ratings, and real-time chat.",
-    heroTitle: "Sign up for free as an employer or worker.",
+    heroTitle: "AjiraNet",
     heroSubtitle:
-      "Join the trusted marketplace for home services and day jobs in Tanzania.",
+      "The Trusted Network for Part-Time Jobs and Home Services in Tanzania.",
     employerButton: "Sign up as an employer",
     workerButton: "Sign up as a worker",
     login: "Already registered? Login",

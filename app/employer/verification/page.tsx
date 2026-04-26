@@ -7,7 +7,7 @@ export default function VerificationPage() {
   const docs = [
     { label: lang === "en" ? "BRELA Certificate" : "Cheti cha BRELA", id: "brela" },
     { label: lang === "en" ? "Business License" : "Leseni ya Biashara", id: "license" },
-    { label: lang === "en" ? "NIDA ID (Director)" : "Kitambulisho cha NIDA", id: "nida" },
+    { label: lang === "en" ? "Government ID (NIDA/Passport)" : "Kitambulisho cha NIDA", id: "nida" },
   ];
 
   return (

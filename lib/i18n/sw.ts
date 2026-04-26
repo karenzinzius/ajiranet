@@ -2,9 +2,9 @@ export const sw = {
   home: {
     tagline:
       "Mechi za kuaminika na wasifu, viwango, na mazungumzo ya wakati halisi.",
-    heroTitle: "Jisajili bure kama mwajiri au mfanyakazi.",
+    heroTitle: "AjiraNet",
     heroSubtitle:
-      "Jiunge na soko la kuaminika la huduma za nyumbani na kazi za siku Tanzania.",
+      "Mtandao wa kuaminika kwa kazi za muda na huduma za nyumbani Tanzania.",
     employerButton: "Jisajili bure kama mwajiri",
     workerButton: "Jisajili bure kama mfanyakazi",
     login: "Umeshasajili? Ingia",

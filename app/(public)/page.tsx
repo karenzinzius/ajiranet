@@ -14,13 +14,16 @@ export default function Home() {
         <main className="space-y-8">
           <section className="grid items-center gap-10 rounded-[2rem] border border-[color:var(--border)] bg-[color:var(--surface)] p-8 shadow-[0_36px_50px_-40px_rgba(15,23,42,0.8)] lg:grid-cols-[1.3fr_0.7fr]">
             <div className="space-y-6">
-              <p className="text-sm uppercase tracking-[0.35em] text-[color:var(--muted)]">
-                {t.tagline}
-              </p>
-              <h1 className="text-4xl font-semibold leading-tight text-[color:var(--text)] sm:text-5xl">
+              <p
+  className="text-sm font-bold uppercase tracking-[0.35em] text-[color:var(--muted)]"
+  style={{ fontFamily: '"Times New Roman", Times, serif' }}
+>
+
+</p>
+              <h1 className="text-8xl font-semibold leading-tight text-[color:var(--text)] sm:text-5xl">
                 {t.heroTitle}
               </h1>
-              <p className="max-w-2xl text-base leading-8 text-[color:var(--muted)] sm:text-lg">
+              <p className="max-w-2xl text-base leading-8 text-[color:var(--muted)] sm:text-2xl" style={{ fontFamily: '"Times New Roman", Times, serif' }}>
                 {t.heroSubtitle}
               </p>
               <div className="grid gap-4 sm:grid-cols-2">

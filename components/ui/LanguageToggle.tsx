@@ -1,5 +1,6 @@
 "use client";
 
+import { Fragment } from "react";
 import { useLang } from "@/lib/i18n/context";
 
 export function LanguageToggle() {
@@ -8,10 +9,9 @@ export function LanguageToggle() {
   return (
     <div className="flex items-center overflow-hidden rounded-xl border border-[color:var(--border)] bg-[color:var(--surface)] text-sm font-medium">
       {(["en", "sw"] as const).map((l, i) => (
-        <>
+        <Fragment key={l}>
           {i !== 0 && <span className="text-[color:var(--border)]">|</span>}
           <button
-            key={l}
             type="button"
             onClick={() => setLang(l)}
             className={`px-3 py-1.5 transition-colors ${
@@ -22,7 +22,7 @@ export function LanguageToggle() {
           >
             {l.toUpperCase()}
           </button>
-        </>
+        </Fragment>
       ))}
     </div>
   );
