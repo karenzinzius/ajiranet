@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useLang } from "@/lib/i18n/context";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabase";
 
 type Props = {
   role: "worker" | "employer";
@@ -21,6 +23,13 @@ export function MenuDrawer({
   initials = "U",
 }: Props) {
   const { lang, setLang } = useLang();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    onClose();
+    await supabase.auth.signOut();
+    router.push("/auth/login");
+  };
 
   // Logic for different roles
   const links =
@@ -39,7 +48,11 @@ export function MenuDrawer({
             label: lang === "en" ? "Verify Business" : "Thibitisha Biashara",
           },
           {
-            href: "/employer/support",
+            href: "/employer/messages",
+            label: lang === "en" ? "Messages" : "Ujumbe",
+          },
+          {
+            href: "/employer/help",
             label: lang === "en" ? "Help & Support" : "Msaada na Huduma",
           },
         ]
@@ -49,7 +62,7 @@ export function MenuDrawer({
             label: lang === "en" ? "My Applications" : "Maombi Yangu",
           },
           {
-            href: "/worker/wallet",
+            href: "/worker/earnings",
             label: lang === "en" ? "Earnings" : "Mapato",
           },
           {
@@ -57,7 +70,11 @@ export function MenuDrawer({
             label: lang === "en" ? "My Gallery" : "Picha za Kazi",
           },
           {
-            href: "/worker/support",
+            href: "/worker/notifications",
+            label: lang === "en" ? "Notifications" : "Arifa",
+          },
+          {
+            href: "/worker/help",
             label: lang === "en" ? "Help & Support" : "Msaada na Huduma",
           },
         ];
@@ -155,7 +172,7 @@ export function MenuDrawer({
             >
               {lang === "en" ? "Settings" : "Mipangilio"}
             </Link>
-            <button className="flex w-full items-center rounded-xl px-3 py-3 text-sm text-red-500 font-bold transition hover:bg-red-500/5">
+            <button onClick={handleLogout} className="flex w-full items-center rounded-xl px-3 py-3 text-sm text-red-500 font-bold transition hover:bg-red-500/5">
               {lang === "en" ? "Log out" : "Ondoka"}
             </button>
           </div>

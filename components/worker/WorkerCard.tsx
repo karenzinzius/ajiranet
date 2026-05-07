@@ -8,13 +8,13 @@ type WorkerCardProps = {
   location: string;
   rating: number;
   reviews: number;
-  availability: string; // Changed from strict types to string for translation support
-  availabilityStatus: "Available now" | "Available next month" | "Busy"; // Keep this for styling
+  availability: string;
+  availabilityStatus: "Available now" | "Available next month" | "Busy";
   skills: string[];
   verified: boolean;
-  // Translation Props
   verifiedLabel?: string;
   reviewsLabel?: string;
+  onClick?: () => void;
 };
 
 const availabilityStyles = {
@@ -23,18 +23,18 @@ const availabilityStyles = {
   "Busy": "bg-red-500/10 text-red-600",
 };
 
-export function WorkerCard({ 
-  id, name, role, location, rating, reviews, 
-  availability, availabilityStatus, 
-  skills, verified, 
-  verifiedLabel = "Verified", 
-  reviewsLabel = "reviews" 
+export function WorkerCard({
+  id, name, role, location, rating, reviews,
+  availability, availabilityStatus,
+  skills, verified,
+  verifiedLabel = "Verified",
+  reviewsLabel = "reviews",
+  onClick,
 }: WorkerCardProps) {
-  return (
-    <Link
-      href={`/worker/${id}`}
-      className="group block rounded-[2rem] border border-[color:var(--border)] bg-[color:var(--surface)] p-6 shadow-[0_35px_80px_-40px_rgba(0,0,0,0.72)] transition hover:border-[color:var(--accent)]"
-    >
+  const cn = "group block rounded-[2rem] border border-[color:var(--border)] bg-[color:var(--surface)] p-6 shadow-[0_35px_80px_-40px_rgba(0,0,0,0.72)] transition hover:border-[color:var(--accent)]";
+
+  const inner = (
+    <>
       <div className="flex items-start justify-between gap-4">
         <div className="flex items-center gap-4">
           <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-[color:var(--accent)]/10 text-lg font-semibold text-[color:var(--accent)]">
@@ -58,7 +58,6 @@ export function WorkerCard({
           <p className="text-xs text-[color:var(--muted)]">{reviews} {reviewsLabel}</p>
         </div>
       </div>
-
       <div className="mt-4 flex items-center justify-between gap-4">
         <div className="flex flex-wrap gap-2">
           {skills.map((skill) => (
@@ -69,6 +68,15 @@ export function WorkerCard({
           {availability}
         </span>
       </div>
-    </Link>
+    </>
   );
+
+  if (onClick) {
+    return (
+      <div onClick={onClick} className={`cursor-pointer ${cn}`}>
+        {inner}
+      </div>
+    );
+  }
+  return <Link href={`/worker/${id}`} className={cn}>{inner}</Link>;
 }

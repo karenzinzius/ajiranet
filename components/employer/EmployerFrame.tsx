@@ -3,12 +3,13 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { SearchOverlay } from "@/components/ui/SearchOverlay";
 import { MenuDrawer } from "@/components/ui/MenuDrawer";
 import { useLang } from "@/lib/i18n/context";
 import { translations } from "@/lib/i18n";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { supabase } from "@/lib/supabase";
 
 type Props = {
   children: React.ReactNode;
@@ -29,6 +30,12 @@ export function EmployerFrame({
   const pathname = usePathname();
   const { lang, setLang } = useLang();
   const t = translations[lang].employer.nav;
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    router.push("/auth/login");
+  };
   const [currentTheme, setCurrentTheme] = useState<"light" | "dark">("dark");
 
   // Move Nav Links inside so 't' is defined
@@ -41,6 +48,7 @@ export function EmployerFrame({
     { href: "/employer/history", label: t.history, icon: <HistoryIcon /> },
     { href: "/employer/wallet", label: t.wallet, icon: <WalletIcon /> },
     { href: "/employer/verification", label: t.verify, icon: <ShieldIcon /> },
+    { href: "/employer/help", label: t.help, icon: <HelpIcon /> },
     { href: "/employer/settings", label: t.settings, icon: <SettingsIcon /> },
   ];
 
@@ -140,7 +148,7 @@ export function EmployerFrame({
               </div>
             </div>
 
-            <button className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm text-red-500 hover:bg-red-500/5 font-semibold">
+            <button onClick={handleLogout} className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm text-red-500 hover:bg-red-500/5 font-semibold">
               <SignOutIcon /> {t.signOut}
             </button>
           </div>
@@ -330,6 +338,11 @@ const ShieldIcon = () => (
     strokeWidth="2"
   >
     <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+  </svg>
+);
+const HelpIcon = () => (
+  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>
   </svg>
 );
 const SettingsIcon = () => (
